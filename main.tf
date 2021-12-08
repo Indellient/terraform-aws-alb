@@ -599,7 +599,7 @@ resource "aws_lb_listener" "frontend_http_tcp" {
   )
 
   lifecycle {
-    ignore_changes = [target_group_arn]
+    ignore_changes = [default_action]
   }
 }
 

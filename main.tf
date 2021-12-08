@@ -597,6 +597,10 @@ resource "aws_lb_listener" "frontend_http_tcp" {
     var.http_tcp_listeners_tags,
     lookup(var.http_tcp_listeners[count.index], "tags", {}),
   )
+
+  lifecycle {
+    ignore_changes = [target_group_arn]
+  }
 }
 
 resource "aws_lb_listener" "frontend_https" {

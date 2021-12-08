@@ -1,3 +1,23 @@
+# NOTE
+Forking this because we need to hardcode ignores in; lifecycle block cannot handle variables.
+As per: https://github.com/terraform-aws-modules/terraform-aws-alb/issues/219
+
+e.g.
+  # module.alb["rtp"].aws_lb_listener.frontend_http_tcp[0] will be updated in-place
+  ~ resource "aws_lb_listener" "frontend_http_tcp" {
+        id                = "arn:aws:elasticloadbalancing:us-east-1:070246235565:listener/app/alb-rtp-dev-alpha/a544b97e87584d87/687ed97e536d3bc6"
+        tags              = {
+            "Environment" = "dev-alpha-east"
+            "Project"     = "rtp"
+        }
+        # (5 unchanged attributes hidden)
+
+      ~ default_action {
+          ~ target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:070246235565:targetgroup/tg-rtp-dev-alpha-green/9b578cf6ac76ccd7" -> "arn:aws:elasticloadbalancing:us-east-1:070246235565:targetgroup/tg-rtp-dev-alpha-blue/183451aff6f155a1"
+            # (2 unchanged attributes hidden)
+        }
+    }
+
 # AWS Application and Network Load Balancer (ALB & NLB) Terraform module
 
 Terraform module which creates Application and Network Load Balancer resources on AWS.
